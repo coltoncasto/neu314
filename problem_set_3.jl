@@ -79,3 +79,5 @@ Returns:
      circ_image[(nrows-p+1):nrows,:,1] = image[1:p,:,1]
      return circ_image
  end
+
+ circular_rotation(image, 100)
