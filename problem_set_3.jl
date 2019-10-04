@@ -28,6 +28,7 @@ Returns:
 """
 function image_colors(filename)
     # load and display image
+    println("Reset with git reset --mixed")
     image = imread(filename)
     imshow(image)
 
