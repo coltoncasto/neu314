@@ -94,7 +94,7 @@ Args:
 Returns:
 - firing_rate (array): firing rate for each of the inpu current values given as input
 """
-function f_i_curve(v)
+function f_i_curve_new(v)
     firing_rate = zeros(length(v))
     for i = 1:length(v)
         times, v, spike_times = LIF_spike(i_mean = v[i])
@@ -103,8 +103,31 @@ function f_i_curve(v)
     return firing_rate
 end
 
+"""
+f_i_curve(v) - This function calculates the firing rate given different average current input values. It also uses the avg_ISI function to help smooth the curve by running multiple simulations for each mean current.
+
+Args:
+- v (array): mean input current values to calculate the firing rate for
+
+Returns:
+- firing_rate (array): firing rate for each of the inpu current values given as input
+"""
+function f_i_curve_original(v)
+    n = 100
+    length_t = 0.4
+    n_averages = zeros(n)
+    firing_rate = zeros(length(v))
+    for i = 1:length(v)
+        n_averages = avg_ISI(n, i_mean = v[i])
+        avg_duration = mean(n_averages)
+        firing_rate[i] = length_t/avg_duration
+    end
+    return firing_rate
+end
+
+
 v = 0:0.001:0.12
-firing_rate = f_i_curve(v)
+firing_rate = f_i_curve_original(v)
 clf()
 plot(v, firing_rate)
 title("Firing Rate vs. Input Current")
